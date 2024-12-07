@@ -1,19 +1,20 @@
 #define rightIRSensor 13
-#define leftIRSensor 12
-#define motorSpeed 240
+#define leftIRSensor 12 // These set up what pins are connected to output of the sensors
+#define motorSpeed 240 // Sets up the motor speed of the robot
 
-//Right motor
+//Right motor, sets what pins correlate to where for the motor
 int enableRightMotor=10;
 int rightMotorPin1=4;
 int rightMotorPin2=5;
 
-//Left motor
+//Left motor, sets what pins correlate to where for the motor
 int enableLeftMotor=11;
 int leftMotorPin1=6;
 int leftMotorPin2=7;
 
-void setup()
+void setup() 
 {
+  //Sets up whether corresponding pins are output or inputs on the arduino board
   pinMode(enableRightMotor, OUTPUT);
   pinMode(rightMotorPin1, OUTPUT);
   pinMode(rightMotorPin2, OUTPUT);
@@ -24,14 +25,14 @@ void setup()
 
   pinMode(rightIRSensor, INPUT);
   pinMode(leftIRSensor, INPUT);
-  rotateMotor(0,0);   
+  rotateMotor(0,0);  
 }
 
 
 void loop()
 {
 
-  int rightIRSensorValue = digitalRead(rightIRSensor);
+  int rightIRSensorValue = digitalRead(rightIRSensor); //First the robot gets a value from the sensor and sets the value to the variable, and the values are used to chnage direction on the robot
   int leftIRSensorValue = digitalRead(leftIRSensor);
 
   //If none of the sensors detects black line, then go straight
@@ -49,14 +50,15 @@ void loop()
   {
       rotateMotor(motorSpeed, -motorSpeed); 
   } 
-  //If both the sensors detect black line, then stop else 
+  //If both the sensors detect black line, then stop 
+  else 
   {
     rotateMotor(0, 0);
   }
 }
 
 
-void rotateMotor(int rightMotorSpeed, int leftMotorSpeed)
+void rotateMotor(int rightMotorSpeed, int leftMotorSpeed) //Function so that the motors know what direction to run in depending on the value they get
 {
   
   if (rightMotorSpeed < 0)
@@ -90,6 +92,6 @@ void rotateMotor(int rightMotorSpeed, int leftMotorSpeed)
     digitalWrite(leftMotorPin1,LOW);
     digitalWrite(leftMotorPin2,LOW);      
   }
-  analogWrite(enableRightMotor, abs(rightMotorSpeed));
+  analogWrite(enableRightMotor, abs(rightMotorSpeed)); //both of these are used to control the robot speed 
   analogWrite(enableLeftMotor, abs(leftMotorSpeed));    
 }
